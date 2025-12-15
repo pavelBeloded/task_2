@@ -1,8 +1,8 @@
 import { createBrowserRouter, Link, Outlet, redirect } from "react-router-dom";
-import { Recipes } from "../modules/Recipes";
-import { Recipe } from "../modules/Recipe";
+import { Recipes } from "../modules/Recipes/Recipes";
+import { Recipe } from "../modules/Recipes/Recipe";
 import React from "react";
-import { LogIn } from "../modules/LogIn";
+import { Auth } from "../modules/Auth/Auth";
 import { Root } from "../modules/root";
 export const router = createBrowserRouter([
     {
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "login",
-                element: <LogIn />,
+                element: <Auth />,
             }
         ]
     }
