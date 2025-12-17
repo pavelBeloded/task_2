@@ -1,9 +1,84 @@
-import React from "react"
+import React, { use } from "react"
+import { useState } from "react";
+import { Button, Group, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+// import type { TextInputProps } from '@mantine/core';
+import { useLoginMutation } from "./authApi";
+import { setCredentials } from "./auth.slice";
+import { useAppDispatch } from "../../app/hooks";
+
+interface FormValues {
+    username: string;
+    password: string;
+}
+
 
 export function Auth() {
+
+    const [login, { isSuccess, data, isLoading, error }] = useLoginMutation();
+    const dispatch = useAppDispatch();
+
+
+
+
+    const form = useForm<FormValues>({
+        initialValues: {
+            username: '',
+            password: '',
+        },
+        mode: 'uncontrolled',
+
+        validate: {
+            username: (value) => (value.length < 2 ? 'Username should have at least 2 letters' : null),
+            password: (value) => (value.length < 2 ? 'Password should have at least 2 letters' : null),
+        }
+    });
+
+    const handleSubmit = form.onSubmit(async ({ username, password }) => {
+        try {
+            const result = await login({ username, password }).unwrap();
+            dispatch(setCredentials(result));
+            setTimeout(() => {
+            }, 2000);
+        } catch (err) {
+            console.error('Login failed', err);
+        }
+    });
+
+
     return (
-        <div>
-            <h1>LogIn</h1>
-        </div>
+        <>
+            <form onSubmit={handleSubmit}>
+                <TextInput
+                    label="Username"
+                    placeholder="Your username"
+                    key={form.key("username")}
+                    {...form.getInputProps('username')}
+                />
+                <TextInput
+                    type="password"
+                    label="Password"
+                    placeholder="Your password"
+                    key={form.key("password")}
+                    {...form.getInputProps('password')}
+                />
+                <Group justify="right" mt="md">
+                    <Button type="submit">
+                        {isLoading ? 'Loading...' : 'Submit'}
+                    </Button>
+                </Group>
+            </form>
+            {error && (
+                <div style={{ color: 'red', marginTop: '8px' }}>
+                    Login failed
+                </div>
+            )}
+
+            {isSuccess && (
+                <div style={{ color: 'green', marginTop: '8px' }}>
+                    Logged in successfully
+                </div>
+            )}
+        </>
     )
 }
