@@ -1,22 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface User {
+    id: number;
+    username: string;
+    email: string;
     firstName: string;
     lastName: string;
-    email: string;
-    id: number;
+    gender: string;
+    image: string;
 }
 
 export interface LoginResponseRaw {
-  accessToken: string;
-  refreshToken: string;
-  id: number;
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  image: string;
+    accessToken: string;
+    refreshToken: string;
+    id: number;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    gender: string;
+    image: string;
 }
 
 export interface LoginRequest {
@@ -36,7 +39,7 @@ export interface authState {
 
 const initialState: authState = {
     user: null,
-    token: null
+    token: localStorage.getItem("token"),
 }
 
 export const authSlice = createSlice({
@@ -46,15 +49,26 @@ export const authSlice = createSlice({
         setCredentials: (state, action: PayloadAction<LoginResponse>) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
+            localStorage.setItem('token', action.payload.token);
         },
+
+        setToken: (state, action: PayloadAction<string>) => {
+            state.token = action.payload
+        },
+
+        setUser: (state, action: PayloadAction<User>) => {
+            state.user = action.payload;
+        },
+
         logout: (state) => {
             state.user = null;
             state.token = null;
+            localStorage.removeItem('token');
         }
     }
-    
+
 })
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setToken, setUser } = authSlice.actions;
 
 export default authSlice.reducer;
