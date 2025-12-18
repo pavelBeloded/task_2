@@ -25,6 +25,7 @@ export interface LoginResponseRaw {
 export interface LoginRequest {
     username: string;
     password: string;
+    expiresInMins?: number;
 }
 
 export interface LoginResponse {
