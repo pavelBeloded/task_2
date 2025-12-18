@@ -2,10 +2,10 @@ import React, { use } from "react"
 import { useState } from "react";
 import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-// import type { TextInputProps } from '@mantine/core';
 import { useLoginMutation } from "./authApi";
 import { setCredentials } from "./auth.slice";
 import { useAppDispatch } from "../../app/hooks";
+import { Navigate } from "react-router-dom";
 
 interface FormValues {
     username: string;
@@ -37,6 +37,9 @@ export function Auth() {
     const handleSubmit = form.onSubmit(async ({ username, password }) => {
         try {
             const result = await login({ username, password }).unwrap();
+            console.log(result);
+
+            console.log("Successfull");
             dispatch(setCredentials(result));
             setTimeout(() => {
             }, 2000);

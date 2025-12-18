@@ -1,10 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface User {
-    firtsName: string;
+    firstName: string;
     lastName: string;
     email: string;
-    id: string;
+    id: number;
+}
+
+export interface LoginResponseRaw {
+  accessToken: string;
+  refreshToken: string;
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
 }
 
 export interface LoginRequest {

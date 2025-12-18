@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../../app/store";
-import type { LoginRequest, LoginResponse } from "./auth.slice";
+import type { LoginRequest, LoginResponse, LoginResponseRaw } from "./auth.slice";
 
 
 export const authApi = createApi({
@@ -9,11 +9,11 @@ export const authApi = createApi({
         baseUrl: "https://dummyjson.com",
 
         prepareHeaders: (headers, { getState }) => {
-                const token = (getState() as RootState).auth.token;
-                if (token) {
-                    headers.set("Authorization", `Bearer ${token}`);
-                }
-                return headers
+            const token = (getState() as RootState).auth.token;
+            if (token) {
+                headers.set("Authorization", `Bearer ${token}`);
+            }
+            return headers
         }
     }),
     endpoints: (builder) => ({
@@ -22,8 +22,22 @@ export const authApi = createApi({
                 url: "/auth/login",
                 method: "POST",
                 body: credentials,
-            })
+            }),
+
+            transformResponse: (response: LoginResponseRaw): LoginResponse => {
+                return {
+                    user: {
+                        firstName: response.firstName,
+                        lastName: response.lastName,
+                        email: response.email,
+                        id: response.id
+                    },
+                    token: response.accessToken
+                }
+            }
         }),
+
+
 
     })
 })
