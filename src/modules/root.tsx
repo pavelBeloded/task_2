@@ -12,7 +12,7 @@ export function Root() {
 
     const token = useAppSelector((state) => state.auth.token);
 
-    const { data: user, isSuccess, error } = useGetMeQuery(undefined, {
+    const { data: user, isSuccess, error, isError } = useGetMeQuery(undefined, {
         skip: !token,
     });
 

@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../modules/Auth/authApi";
 import authReducer from "../modules/Auth/auth.slice";
 import { recipesApi } from "../modules/Recipes/recipesApi";
-
+import {rtkQueryErrorLogger} from "../middleware/authMiddleware";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -12,7 +12,8 @@ export const store = configureStore({
 
     middleware: getDefaultMiddleware => getDefaultMiddleware()
     .concat(authApi.middleware)
-    .concat(recipesApi.middleware),
+    .concat(recipesApi.middleware)
+    .concat(rtkQueryErrorLogger),
 });
 
 
