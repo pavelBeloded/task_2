@@ -17,7 +17,7 @@ export function Root() {
     });
 
     useEffect(() => {
-
+        
         if (isSuccess && user) {
             dispatch(setUser(user));
         }
@@ -27,26 +27,6 @@ export function Root() {
         }
 
     }, [token, isSuccess, user, dispatch]);
-
-    // return (
-    //     <div>
-    //         <header>
-    //             <Link to="recipes">Recipes</Link>
-    //             {
-    //                 token ? <Group justify="right" mt="md">
-    //                     <Button >
-
-    //                     </Button>
-    //                 </Group> :
-    //                     <Link to="login">Login</Link>
-    //             }
-    //         </header>
-
-    //         <div className="detail">
-    //             <Outlet />
-    //         </div>
-    //     </div>
-    // );
 
 
     return (

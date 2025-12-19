@@ -4,6 +4,7 @@ import { useForm } from '@mantine/form';
 import { useLoginMutation } from "./authApi";
 import { setCredentials } from "./auth.slice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { Navigate } from "react-router-dom";
 
 interface FormValues {
     username: string;
@@ -35,9 +36,7 @@ export function Auth() {
     const handleSubmit = form.onSubmit(async ({ username, password }) => {
         try {
             const result = await login({ username, password, expiresInMins: 60 }).unwrap();
-            console.log(result);
 
-            console.log("Successfull");
             dispatch(setCredentials(result));
             setTimeout(() => {
             }, 2000);
@@ -85,11 +84,9 @@ export function Auth() {
         )
     }
 
-    // return (
-    //     <>
-    //         <h2>Hello, {}</h2>
-    //     </>
-    // )
+    return (
+       <Navigate to="/recipes" />
+    )
 
 
 
