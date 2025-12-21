@@ -2,15 +2,16 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import type { Recipe } from "./recipes.slice"
 
 interface RecipesResponse {
-  recipes: Recipe[];
-  total: number;
-  skip: number;
-  limit: number;
+    recipes: Recipe[];
+    total: number;
+    skip: number;
+    limit: number;
 }
 
 
 export const recipesApi = createApi({
     reducerPath: "recipesApi",
+    keepUnusedDataFor: 300,
     baseQuery: fetchBaseQuery({
         baseUrl: "https://dummyjson.com",
     }),

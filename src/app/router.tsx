@@ -5,7 +5,8 @@ import React from "react";
 import { Auth } from "../modules/Auth/Auth";
 import { Root } from "../modules/root";
 import { ProtectedRoute } from "../modules/protectedRoute";
-
+import { store } from "./store";
+import { recipesApi } from "../modules/Recipes/recipesApi";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
                     {
                         path: "recipes",
                         element: <Recipes />,
+                        loader: async () => {
+                            store.dispatch(recipesApi.endpoints.getRecipes.initiate(0));
+                            return null;
+                        }
                     },
                     {
                         path: "recipes/:recipeId",
