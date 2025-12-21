@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import type { Recipe } from "./recipes.slice"
 
 interface RecipesResponse {
     recipes: Recipe[];
@@ -7,6 +6,32 @@ interface RecipesResponse {
     skip: number;
     limit: number;
 }
+
+interface GetRecipesArgs {
+    limit: number;
+    skip: number;
+}
+type Igridient = string;
+type Instruction = string;
+type Tag = string;
+
+export interface Recipe {
+    id: number;
+    name: string;
+    ingredients: Igridient[];
+    instructions: Instruction[];
+    prepTimeMinutes: number;
+    cookTimeMinutes: number;
+    servings: number;
+    difficulty: string;
+    cuisine: string;
+    caloriesPerServing: number;
+    tags: Tag[];
+    image: string;
+}
+
+
+
 
 
 export const recipesApi = createApi({
@@ -17,8 +42,8 @@ export const recipesApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getRecipes: builder.query<RecipesResponse, number>({
-            query: (limit = 0) => `/recipes?limit=${limit}`,
+        getRecipes: builder.query<RecipesResponse, GetRecipesArgs>({
+            query: ({ limit, skip }) => `/recipes?limit=${limit}&skip=${skip}`,
         }),
 
         getRecipe: builder.query<Recipe, number>({

@@ -16,11 +16,9 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import { useGetRecipeQuery } from './recipesApi';
 
 export function Recipe() {
-    const { recipeId } = useParams(); // Get ID from URL
+    const { recipeId } = useParams(); 
     const navigate = useNavigate();
 
-    // Fetch single recipe
-    // skip: !recipeId ensures we don't fetch if ID is undefined
     const { data: recipe, isLoading, error } = useGetRecipeQuery(Number(recipeId)!, {
         skip: !recipeId,
     });
