@@ -1,4 +1,4 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import { logout, setUser } from "../modules/Auth/auth.slice.ts";
 import { useAppDispatch, useAppSelector } from "../app/hooks.ts";
@@ -9,10 +9,10 @@ import { IconLogout, IconSettings, IconChevronDown } from "@tabler/icons-react";
 
 export function Root() {
     const dispatch = useAppDispatch();
-
+    const navigate = useNavigate();
     const token = useAppSelector((state) => state.auth.token);
 
-    const { data: user, isSuccess, error, isError } = useGetMeQuery(undefined, {
+    const { data: user, isSuccess, error } = useGetMeQuery(undefined, {
         skip: !token,
     });
 
@@ -36,10 +36,9 @@ export function Root() {
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
-                    {/* Left side: Logo or Title */}
                     <Group>
                         <Text fw={700} size="lg">MyRecipeApp</Text>
-                        <Button variant="subtle" onClick={() => <Navigate to="/recipes" />}>Recipes</Button>
+                        <Button variant="subtle" onClick={() =>navigate('/recipes')}>Recipes</Button>
                     </Group>
 
                     <Group>
