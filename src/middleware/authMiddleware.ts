@@ -1,6 +1,6 @@
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
-import { logout } from '../modules/Auth/auth.slice';
+import { logout } from '../modules/auth/auth.slice';
 
 export const rtkQueryErrorLogger: Middleware = (api) => (next) => (action) => {
   if (isRejectedWithValue(action)) {

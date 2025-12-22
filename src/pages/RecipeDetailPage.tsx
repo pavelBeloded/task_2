@@ -18,9 +18,9 @@ import {
     Card,
 } from '@mantine/core';
 import { IconArrowLeft, IconChefHat, IconClock, IconFlame, IconUsers } from '@tabler/icons-react';
-import { useGetRecipeQuery } from './recipesApi';
+import { useGetRecipeQuery } from '../modules/recipe';
 
-export function Recipe() {
+export function RecipeDetailPage() {
     const { recipeId } = useParams();
     const navigate = useNavigate();
 

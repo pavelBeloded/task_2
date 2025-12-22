@@ -1,6 +1,5 @@
 import { SimpleGrid } from '@mantine/core';
-import type { Recipe } from './recipesApi';
-import { RecipeCard } from './recipeCard';
+import { Recipe,RecipeCard } from '../recipe';
 
 interface RecipesListProps {
     recipes: Recipe[];

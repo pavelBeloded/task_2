@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authApi } from "../modules/Auth/authApi";
-import authReducer from "../modules/Auth/auth.slice";
-import { recipesApi } from "../modules/Recipes/recipesApi";
+import { authApi } from "../modules/auth/api";
+import authReducer from "../modules/auth/auth.slice";
+import { recipesApi } from "../modules/recipe/api";
 import {rtkQueryErrorLogger} from "../middleware/authMiddleware";
 export const store = configureStore({
     reducer: {

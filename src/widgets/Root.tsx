@@ -1,16 +1,16 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { logout, setUser } from "../modules/Auth/auth.slice.ts";
-import { useAppDispatch, useAppSelector } from "../app/hooks.ts";
-import { useGetMeQuery } from "../modules/Auth/authApi.ts";
-import { 
-    AppShell, 
-    Avatar, 
-    Button, 
-    Group, 
-    Menu, 
-    rem, 
-    Text, 
+import { logout, setUser } from "../modules/auth/auth.slice.ts";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks.ts";
+import { useGetMeQuery } from "../modules/auth/api.ts";
+import {
+    AppShell,
+    Avatar,
+    Button,
+    Group,
+    Menu,
+    rem,
+    Text,
     UnstyledButton,
     Box,
     Burger,
@@ -19,9 +19,9 @@ import {
     ActionIcon
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { 
-    IconLogout, 
-    IconSettings, 
+import {
+    IconLogout,
+    IconSettings,
     IconChevronDown,
     IconChefHat,
     IconSun,
@@ -53,36 +53,36 @@ export function Root() {
             <AppShell.Header>
                 <Container size="xl" h="100%">
                     <Group h="100%" justify="space-between">
-                        <Group 
-                            gap="xs" 
-                            onClick={() => navigate('/')} 
+                        <Group
+                            gap="xs"
+                            onClick={() => navigate('/')}
                             style={{ cursor: 'pointer' }}
                             tabIndex={0}
                             role="button"
                             aria-label="Go to home page"
                         >
                             <IconChefHat size={32} color="var(--mantine-color-blue-filled)" />
-                            <Text 
-                                fw={700} 
+                            <Text
+                                fw={700}
                                 size="xl"
-                                c="bright" 
+                                c="bright"
                             >
                                 MyRecipeApp
                             </Text>
                         </Group>
 
                         <Group gap="md" visibleFrom="md">
-                            <Button 
-                                variant="default" 
+                            <Button
+                                variant="default"
                                 onClick={() => navigate('/recipes')}
                             >
                                 🍳 Recipes
                             </Button>
 
-                            <ActionIcon 
+                            <ActionIcon
                                 aria-label={`Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} mode`}
-                                variant="default" 
-                                size="lg" 
+                                variant="default"
+                                size="lg"
                                 onClick={() => toggleColorScheme()}
                             >
                                 {colorScheme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
@@ -91,10 +91,10 @@ export function Root() {
                             {token && user ? (
                                 <Menu shadow="xl" width={260} position="bottom-end" radius="md">
                                     <Menu.Target>
-                                        <UnstyledButton 
-                                            style={{ 
-                                                display: 'flex', 
-                                                alignItems: 'center', 
+                                        <UnstyledButton
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
                                                 gap: 8,
                                                 padding: '8px 12px',
                                                 borderRadius: 'var(--mantine-radius-md)',
@@ -102,10 +102,10 @@ export function Root() {
                                                 border: '1px solid var(--mantine-color-default-border)'
                                             }}
                                         >
-                                            <Avatar 
-                                                src={user.image} 
-                                                radius="xl" 
-                                                size="md" 
+                                            <Avatar
+                                                src={user.image}
+                                                radius="xl"
+                                                size="md"
                                                 alt={`${user.firstName}'s profile`}
                                             />
                                             <Box>
@@ -116,7 +116,7 @@ export function Root() {
                                         </UnstyledButton>
                                     </Menu.Target>
                                     <Menu.Dropdown>
-                                        <Menu.Item 
+                                        <Menu.Item
                                             leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} />}
                                         >
                                             Settings
@@ -134,10 +134,10 @@ export function Root() {
                                     </Menu.Dropdown>
                                 </Menu>
                             ) : (
-                                <Button 
-                                    variant="gradient" 
+                                <Button
+                                    variant="gradient"
                                     gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
-                                    autoContrast 
+                                    autoContrast
                                     onClick={() => navigate('/login')}
                                 >
                                     Login
@@ -145,12 +145,12 @@ export function Root() {
                             )}
                         </Group>
 
-                        <Burger 
-                            aria-label="Toggle navigation menu" 
-                            opened={opened} 
-                            onClick={toggle} 
-                            hiddenFrom="md" 
-                            size="sm" 
+                        <Burger
+                            aria-label="Toggle navigation menu"
+                            opened={opened}
+                            onClick={toggle}
+                            hiddenFrom="md"
+                            size="sm"
                         />
                     </Group>
                 </Container>
@@ -158,19 +158,19 @@ export function Root() {
 
             <AppShell.Navbar p="md">
                 {/* ✅ Better mobile menu contrast */}
-                <Button 
-                    variant="default" 
-                    fullWidth 
-                    onClick={() => { navigate('/recipes'); toggle(); }} 
+                <Button
+                    variant="default"
+                    fullWidth
+                    onClick={() => { navigate('/recipes'); toggle(); }}
                     mb="xs"
                 >
                     🍳 Recipes
                 </Button>
 
-                <Button 
+                <Button
                     variant="default"
-                    fullWidth 
-                    onClick={() => toggleColorScheme()} 
+                    fullWidth
+                    onClick={() => toggleColorScheme()}
                     mb="md"
                 >
                     {colorScheme === 'dark' ? '☀️ Light' : '🌙 Dark'}
@@ -178,19 +178,19 @@ export function Root() {
 
                 {token && user ? (
                     <>
-                        <Box 
-                            p="md" 
-                            mb="md" 
-                            style={{ 
-                                borderRadius: 8, 
+                        <Box
+                            p="md"
+                            mb="md"
+                            style={{
+                                borderRadius: 8,
                                 backgroundColor: 'var(--mantine-color-default)',
                                 border: '1px solid var(--mantine-color-default-border)'
                             }}
                         >
                             <Group>
-                                <Avatar 
-                                    src={user.image} 
-                                    radius="xl" 
+                                <Avatar
+                                    src={user.image}
+                                    radius="xl"
                                     size="lg"
                                     alt={`${user.firstName}'s profile`}
                                 />
@@ -201,12 +201,12 @@ export function Root() {
                             </Group>
                         </Box>
 
-                        <Button 
-                            variant="light" 
-                            fullWidth 
-                            leftSection={<IconSettings size={18} />} 
+                        <Button
+                            variant="light"
+                            fullWidth
+                            leftSection={<IconSettings size={18} />}
                             mb="xs"
-                            autoContrast 
+                            autoContrast
                         >
                             Settings
                         </Button>
@@ -216,7 +216,7 @@ export function Root() {
                             variant="filled"
                             fullWidth
                             leftSection={<IconLogout size={18} />}
-                            autoContrast  
+                            autoContrast
                             onClick={() => {
                                 dispatch(logout());
                                 navigate('/login');
@@ -227,11 +227,11 @@ export function Root() {
                         </Button>
                     </>
                 ) : (
-                    <Button 
-                        variant="gradient" 
-                        gradient={{ from: 'blue', to: 'cyan', deg: 45 }} 
-                        fullWidth 
-                        autoContrast 
+                    <Button
+                        variant="gradient"
+                        gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
+                        fullWidth
+                        autoContrast
                         onClick={() => { navigate('/login'); toggle(); }}
                     >
                         Login

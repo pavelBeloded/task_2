@@ -1,8 +1,7 @@
 import { Button, Container, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useLoginMutation } from "./authApi";
-import { setCredentials } from "./auth.slice";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useLoginMutation, setCredentials } from '../modules/auth';
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Navigate } from "react-router-dom";
 
 interface FormValues {
@@ -11,7 +10,7 @@ interface FormValues {
 }
 
 
-export function Auth() {
+export function LoginPage() {
 
     const [login, { isSuccess, isLoading, error }] = useLoginMutation();
     const dispatch = useAppDispatch();

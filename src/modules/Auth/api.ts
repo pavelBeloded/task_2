@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../../app/store";
-import type { User, LoginRequest, LoginResponse, LoginResponseRaw, } from "./auth.slice";
+import type { User, LoginRequest, LoginResponse, LoginResponseRaw, } from "./model";
 
 
 export const authApi = createApi({

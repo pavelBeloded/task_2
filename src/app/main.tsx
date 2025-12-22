@@ -6,7 +6,6 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router.tsx";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-import { setToken } from "../modules/Auth/auth.slice.ts";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

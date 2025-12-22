@@ -1,6 +1,6 @@
-import type { Recipe } from "./recipesApi";
-import { SimpleGrid, Card, Image, Text, Badge, Group, Loader, Button } from '@mantine/core';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import type { Recipe } from "./model";
+import { Card, Image, Text, Badge, Group, Loader, Button } from '@mantine/core';
+import { useNavigate } from "react-router-dom";
 
 interface RecipeCardProps {
     recipe: Recipe;

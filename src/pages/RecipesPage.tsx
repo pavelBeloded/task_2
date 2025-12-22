@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Text, Group, Loader, Button, SegmentedControl, Stack, TextInput, ActionIcon, Radio, Container, Center, Paper, Select } from '@mantine/core';
-import { useGetRecipesQuery, useGetTagsQuery } from "./recipesApi";
-import type { Order, RecipesQuery, SortBy, Tag } from "./recipesApi";
+import { Text, Group, Loader, Button, SegmentedControl, Stack, TextInput, Container, Center, Paper, Select } from '@mantine/core';
+import { useGetRecipesQuery, useGetTagsQuery, Order, RecipesQuery, SortBy, Tag, RecipesList, } from "../modules/recipe";
 import { useSearchParams } from "react-router-dom";
-import { RecipesList } from './recipesList';
+
 import { IconSearch } from '@tabler/icons-react';
 import { useDebouncedValue } from '@mantine/hooks';
 
 type SelectMode = 'search' | 'tag' | 'mealType';
 
-export function Recipes() {
+export function RecipesPage() {
 
 
     const [value, setValue] = useState('');

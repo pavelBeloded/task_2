@@ -1,42 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { authState, LoginResponse, User } from "./model";
 
-export interface User {
-    id: number;
-    username: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    image: string;
-}
 
-export interface LoginResponseRaw {
-    accessToken: string;
-    refreshToken: string;
-    id: number;
-    username: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    image: string;
-}
-
-export interface LoginRequest {
-    username: string;
-    password: string;
-    expiresInMins?: number;
-}
-
-export interface LoginResponse {
-    user: User;
-    token: string;
-}
-
-export interface authState {
-    user: User | null;
-    token: string | null;
-}
 
 const initialState: authState = {
     user: null,
