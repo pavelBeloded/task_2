@@ -83,4 +83,4 @@ export const recipesApi = createApi({
     }),
 })
 
-export const { useGetRecipesQuery, useGetRecipeQuery } = recipesApi;
+export const { useGetRecipesQuery, useGetRecipeQuery, useGetTagsQuery } = recipesApi;
