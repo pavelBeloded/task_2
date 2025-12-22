@@ -10,7 +10,7 @@ export function RecipesList({ recipes }: RecipesListProps) {
 
 
     return (
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} mb="md">
             {recipes.map((recipe) => (
                 <RecipeCard key={recipe.id} recipe={recipe} />
             ))}

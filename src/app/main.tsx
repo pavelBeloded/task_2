@@ -5,15 +5,13 @@ import { store } from "./store";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router.tsx";
 import "@mantine/core/styles.css";
-// import "@mantine/form/styles.css";
-// import "@mantine/hooks/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { setToken } from "../modules/Auth/auth.slice.ts";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <MantineProvider >
+    <MantineProvider defaultColorScheme="auto">
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
