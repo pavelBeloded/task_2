@@ -1,4 +1,4 @@
-import { Button, Group, TextInput } from '@mantine/core';
+import { Button, Container, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useLoginMutation } from "./authApi";
 import { setCredentials } from "./auth.slice";
@@ -52,15 +52,19 @@ export function Auth() {
 
     if (!token) {
         return (
-            <>
+            <Container>
                 <form onSubmit={handleSubmit}>
                     <TextInput
+                        radius="md"
+                        size="md"
                         label="Username"
                         placeholder="Your username"
                         key={form.key("username")}
                         {...form.getInputProps('username')}
                     />
                     <TextInput
+                        radius="md"
+                        size="md"
                         type="password"
                         label="Password"
                         placeholder="Your password"
@@ -68,7 +72,10 @@ export function Auth() {
                         {...form.getInputProps('password')}
                     />
                     <Group justify="right" mt="md">
-                        <Button type="submit">
+                        <Button
+                            type="submit"
+                            size="sm"
+                            >
                             {isLoading ? 'Loading...' : 'Submit'}
                         </Button>
                     </Group>
@@ -84,12 +91,12 @@ export function Auth() {
                         Logged in successfully
                     </div>
                 )}
-            </>
+            </Container>
         )
     }
 
     return (
-       <Navigate to="/recipes" />
+        <Navigate to="/recipes" />
     )
 
 
