@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Text, Group, Loader, Button } from '@mantine/core';
+import { Text, Group, Loader, Button, SegmentedControl, Stack, TextInput, ActionIcon } from '@mantine/core';
 import { useGetRecipesQuery } from "./recipesApi";
 import type { Order, RecipesQuery, SortBy, Tag } from "./recipesApi";
 import { useSearchParams } from "react-router-dom";
 import { RecipesList } from './recipesList';
+import { IconArrowRight, IconSearch } from '@tabler/icons-react';
+import { useDebouncedCallback } from '@mantine/hooks';
+
+type SelectMode = 'search' | 'tag' | 'mealType';
+
 export function Recipes() {
 
     const [searchParam, setSearchParam] = useSearchParams();
-    const [mode, setMode] = useState<'search' | 'tag' | 'mealType'>('search');
+    const [mode, setMode] = useState<SelectMode>('search');
     const [search, setSearch] = useState('');
     const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
     const [selectedMealType, setSelectedMealType] = useState<string | null>(null);
@@ -16,11 +21,14 @@ export function Recipes() {
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(parseInt(searchParam.get('page') || '1'));
     useEffect(() => {
-        const urlPage = searchParam.get('page');
-        if (urlPage) {
-            setPage(parseInt(urlPage));
-        }
-    }, [searchParam]);
+       setSearchParam({ page: String(page) });
+    }, [page]);
+
+
+    const debouncedSetSearch = useDebouncedCallback((value: string) => {
+        setSearch(value);
+        setPage(1); 
+    }, 300);
 
     const query: RecipesQuery = {
         q: mode === 'search' ? search : null,
@@ -41,6 +49,33 @@ export function Recipes() {
 
     return (
         <>
+            <Stack>
+                <SegmentedControl
+                    mb={"md"}
+                    size="md"
+                    value={mode}
+                    data={[
+                        { label: 'Search', value: 'search' },
+                        { label: 'Tag', value: 'tag' },
+                        { label: 'Meal Type', value: 'mealType' },
+                    ]}
+                    onChange={value => setMode(value as SelectMode)}
+                />
+
+                {mode == 'search' && (
+                    <TextInput
+                        radius="xl"
+                        size="md"
+                        mb="md"
+                        placeholder="Search questions"
+                        rightSectionWidth={42}
+                        // value={search}
+                        onChange={(event) => debouncedSetSearch(event.currentTarget.value)}
+                        leftSection={<IconSearch size={18} stroke={1.5} />}
+
+                    />
+                )}
+            </Stack>
             <RecipesList recipes={data?.recipes || []} />
             <Group justify='center' mt="xl">
 
