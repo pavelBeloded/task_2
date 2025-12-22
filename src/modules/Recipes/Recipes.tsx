@@ -1,63 +1,49 @@
-import React, { useState } from 'react';
-import { SimpleGrid, Card, Image, Text, Badge, Group, Loader, Button } from '@mantine/core';
+import  { useState } from 'react';
+import { Text, Group, Loader, Button } from '@mantine/core';
 import { useGetRecipesQuery } from "./recipesApi";
+import type { Order, RecipesQuery, SortBy, Tag } from "./recipesApi";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { RecipesList } from './recipesList';
 export function Recipes() {
 
     const [searchParam, setSearchParam] = useSearchParams();
+    const [mode, setMode] = useState<'search' | 'tag' | 'mealType'>('search');
+    const [search, setSearch] = useState('');
+    const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
+    const [selectedMealType, setSelectedMealType] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState<SortBy>('name');
+    const [order, setOrder] = useState<Order>('asc');
+    const [limit, setLimit] = useState(12);
+    const [page, setPage] = useState(parseInt(searchParam.get('page') || '1'));
 
-    const page = parseInt(searchParam.get('page') || '1');
-    const limit = 10;
-    const skip = (page - 1) * limit;
+    const query: RecipesQuery = {
+        q: mode === 'search' ? search : null,
+        tag: mode === 'tag' ? selectedTag : null,
+        mealType: mode === 'mealType' ? selectedMealType : null,
+        sortBy,
+        order,
+        limit,
+        skip: (page - 1) * limit
+    }
 
-    const { data, isLoading, error } = useGetRecipesQuery({ limit, skip });
+    const { data, isLoading, error } = useGetRecipesQuery(query);
 
 
 
-    const navigate = useNavigate();
     if (isLoading) return <Loader />;
     if (error) return <Text c="red">Error loading recipes</Text>;
     const totalRecipes = data?.total;
 
     return (
         <>
-            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
-                {data?.recipes.map((recipe) => (
-                    <Card key={recipe.id} shadow="sm" padding="lg" radius="md" withBorder
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                            navigate(`/recipes/${recipe.id}`);
-                        }}
-                    >
-                        <Card.Section>
-                            <Image
-                                loading="lazy"
-                                src={recipe.image}
-                                height={160}
-                                alt={recipe.name}
-                            />
-                        </Card.Section>
-
-                        <Group justify="space-between" mt="md" mb="xs">
-                            <Text fw={500}>{recipe.name}</Text>
-                            <Badge color="pink" variant="light">
-                                {recipe.difficulty}
-                            </Badge>
-                        </Group>
-
-                        <Text size="sm" c="dimmed">
-                            {recipe.cuisine} • {recipe.caloriesPerServing} kcal
-                        </Text>
-                    </Card>
-                ))}
-            </SimpleGrid>
-
+            <RecipesList recipes={data?.recipes || []} />
             <Group justify='center' mt="xl">
 
                 <Button
                     disabled={page === 1}
                     onClick={() => {
-                        setSearchParam({ page: (page - 1).toString() });
+                        setPage(page - 1);
+                        setSearchParam({ page: page.toString() });
                     }}>
                     Previous
                 </Button>
@@ -65,8 +51,11 @@ export function Recipes() {
                 <Text>{page}</Text>
 
                 <Button
-                    disabled={data?.total! < (page + 1) * limit}
-                    onClick={() => setSearchParam({ page: (page + 1).toString() })}
+                    disabled={data?.total! <= (page) * limit}
+                    onClick={() => {
+                        setPage(page + 1);
+                        setSearchParam({ page: page.toString() })
+                    }}
                 >
                     Next
                 </Button>
