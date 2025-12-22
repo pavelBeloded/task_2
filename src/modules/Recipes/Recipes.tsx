@@ -5,7 +5,7 @@ import type { Order, RecipesQuery, SortBy, Tag } from "./recipesApi";
 import { useSearchParams } from "react-router-dom";
 import { RecipesList } from './recipesList';
 import { IconSearch } from '@tabler/icons-react';
-import { useDebouncedCallback, useDebouncedValue } from '@mantine/hooks';
+import { useDebouncedValue } from '@mantine/hooks';
 
 type SelectMode = 'search' | 'tag' | 'mealType';
 
@@ -193,30 +193,6 @@ export function Recipes() {
                     </Group>
                 </Paper>
             )}
-
-            {/* <Group justify='center' mt="xl">
-
-                <Button
-                    disabled={page === 1}
-                    onClick={() => {
-                        setSearchParam({ page: (page - 1).toString() });
-                        setPage(page - 1);
-                    }}>
-                    Previous
-                </Button>
-
-                <Text>{page}</Text>
-
-                <Button
-                    disabled={data?.total! <= (page) * limit}
-                    onClick={() => {
-                        setSearchParam({ page: (page + 1).toString() })
-                        setPage(page + 1);
-                    }}
-                >
-                    Next
-                </Button>
-            </Group > */}
 
         </Container>
     );

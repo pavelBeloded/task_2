@@ -1,5 +1,5 @@
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { logout, setUser } from "../modules/Auth/auth.slice.ts";
 import { useAppDispatch, useAppSelector } from "../app/hooks.ts";
 import { useGetMeQuery } from "../modules/Auth/authApi.ts";

@@ -65,7 +65,6 @@ export function Recipe() {
 
     return (
        <Container size="lg" py="xl">
-            {/* ✅ Better Back Button */}
             <Button
                 variant="subtle"
                 size="md"
@@ -77,7 +76,6 @@ export function Recipe() {
             </Button>
 
             <Stack gap="lg">
-                {/* ✅ Hero Section */}
                 <Paper shadow="md" p="xl" radius="lg" withBorder>
                     <Grid gutter="xl">
                         <Grid.Col span={{ base: 12, md: 5 }}>
@@ -123,7 +121,6 @@ export function Recipe() {
 
                                 <Divider />
 
-                                {/* ✅ Stats with Icons */}
                                 <Grid gutter="lg">
                                     <Grid.Col span={6}>
                                         <Card withBorder padding="md" radius="md">
@@ -186,7 +183,6 @@ export function Recipe() {
                     </Grid>
                 </Paper>
 
-                {/* ✅ Ingredients & Instructions */}
                 <Grid gutter="lg">
                     <Grid.Col span={{ base: 12, md: 5 }}>
                         <Paper shadow="sm" p="lg" radius="md" withBorder h="100%">
@@ -220,7 +216,6 @@ export function Recipe() {
                     </Grid.Col>
                 </Grid>
 
-                {/* ✅ All Tags Section */}
                 {recipe.tags.length > 0 && (
                     <Paper shadow="sm" p="lg" radius="md" withBorder>
                         <Title order={4} mb="md">🏷️ Tags</Title>
