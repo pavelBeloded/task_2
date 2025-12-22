@@ -9,88 +9,236 @@ import {
     List,
     Loader,
     Button,
-    Paper
+    Paper,
+    Center,
+    Stack,
+    Box,
+    Divider,
+    Grid,
+    Card,
 } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { IconArrowLeft, IconChefHat, IconClock, IconFlame, IconUsers } from '@tabler/icons-react';
 import { useGetRecipeQuery } from './recipesApi';
 
 export function Recipe() {
-    const { recipeId } = useParams(); 
+    const { recipeId } = useParams();
     const navigate = useNavigate();
 
     const { data: recipe, isLoading, error } = useGetRecipeQuery(Number(recipeId)!, {
         skip: !recipeId,
     });
 
-    if (isLoading) return <Loader />;
-    if (error || !recipe) return <Text c="red">Recipe not found</Text>;
+    if (isLoading) {
+        return (
+            <Container size="md" py="xl">
+                <Center style={{ height: 400 }}>
+                    <Stack align="center" gap="md">
+                        <Loader size="xl" />
+                        <Text size="lg">Loading recipe...</Text>
+                    </Stack>
+                </Center>
+            </Container>
+        );
+    }
+    if (error || !recipe) {
+        return (
+            <Container size="md" py="xl">
+                <Paper p="xl" radius="md" withBorder>
+                    <Center>
+                        <Stack align="center" gap="sm">
+                            <Text size="xl" fw={700} c="red">Recipe not found</Text>
+                            <Text c="dimmed">The recipe you're looking for doesn't exist</Text>
+                            <Button
+                                mt="md"
+                                variant="light"
+                                leftSection={<IconArrowLeft size={16} />}
+                                onClick={() => navigate(-1)}
+                            >
+                                Back to Recipes
+                            </Button>
+                        </Stack>
+                    </Center>
+                </Paper>
+            </Container>
+        );
+    }
 
     return (
-        <Container size="md" py="xl">
+       <Container size="lg" py="xl">
+            {/* ✅ Better Back Button */}
             <Button
                 variant="subtle"
-                leftSection={<IconArrowLeft size={16} />}
+                size="md"
+                leftSection={<IconArrowLeft size={18} />}
                 onClick={() => navigate(-1)}
-                mb="md"
+                mb="lg"
             >
                 Back to Recipes
             </Button>
 
-            <Paper shadow="xs" p="md" withBorder>
-                <Group align="flex-start" wrap="nowrap">
-                    <Image
-                        src={recipe.image}
-                        w={300}
-                        radius="md"
-                        alt={recipe.name}
-                    />
+            <Stack gap="lg">
+                {/* ✅ Hero Section */}
+                <Paper shadow="md" p="xl" radius="lg" withBorder>
+                    <Grid gutter="xl">
+                        <Grid.Col span={{ base: 12, md: 5 }}>
+                            <Image
+                                src={recipe.image}
+                                radius="md"
+                                alt={recipe.name}
+                                h={{ base: 300, md: 400 }}
+                                fit="cover"
+                            />
+                        </Grid.Col>
 
-                    <div>
-                        <Title order={2}>{recipe.name}</Title>
+                        <Grid.Col span={{ base: 12, md: 7 }}>
+                            <Stack gap="md">
+                                <Title order={1}>{recipe.name}</Title>
 
-                        <Group mt="xs">
-                            <Badge color="pink">{recipe.difficulty}</Badge>
-                            <Badge color="blue">{recipe.cuisine}</Badge>
-                            <Text size="sm" c="dimmed">{recipe.caloriesPerServing} kcal</Text>
-                        </Group>
+                                {/* ✅ Tags with icons */}
+                                <Group gap="xs">
+                                    <Badge 
+                                        size="lg" 
+                                        variant="light" 
+                                        color="pink"
+                                    >
+                                        {recipe.difficulty}
+                                    </Badge>
+                                    <Badge 
+                                        size="lg" 
+                                        variant="light" 
+                                        color="blue"
+                                    >
+                                        {recipe.cuisine}
+                                    </Badge>
+                                    {recipe.tags.slice(0, 3).map((tag) => (
+                                        <Badge 
+                                            key={tag} 
+                                            size="lg" 
+                                            variant="outline"
+                                        >
+                                            {tag}
+                                        </Badge>
+                                    ))}
+                                </Group>
 
-                        <Group mt="md" gap="xl">
-                            <div>
-                                <Text fw={700}>Prep Time</Text>
-                                <Text>{recipe.prepTimeMinutes} min</Text>
-                            </div>
-                            <div>
-                                <Text fw={700}>Cook Time</Text>
-                                <Text>{recipe.cookTimeMinutes} min</Text>
-                            </div>
-                            <div>
-                                <Text fw={700}>Servings</Text>
-                                <Text>{recipe.servings}</Text>
-                            </div>
-                        </Group>
-                    </div>
-                </Group>
+                                <Divider />
 
-                <Group mt="xl" align="flex-start" gap={50}>
-                    <div style={{ flex: 1 }}>
-                        <Title order={3} mb="sm">Ingredients</Title>
-                        <List withPadding>
-                            {recipe.ingredients.map((item, index) => (
-                                <List.Item key={index}>{item}</List.Item>
+                                {/* ✅ Stats with Icons */}
+                                <Grid gutter="lg">
+                                    <Grid.Col span={6}>
+                                        <Card withBorder padding="md" radius="md">
+                                            <Group gap="xs">
+                                                <IconClock size={20} color="gray" />
+                                                <Box>
+                                                    <Text size="xs" c="dimmed">Prep Time</Text>
+                                                    <Text fw={700} size="lg">
+                                                        {recipe.prepTimeMinutes} min
+                                                    </Text>
+                                                </Box>
+                                            </Group>
+                                        </Card>
+                                    </Grid.Col>
+
+                                    <Grid.Col span={6}>
+                                        <Card withBorder padding="md" radius="md">
+                                            <Group gap="xs">
+                                                <IconChefHat size={20} color="gray" />
+                                                <Box>
+                                                    <Text size="xs" c="dimmed">Cook Time</Text>
+                                                    <Text fw={700} size="lg">
+                                                        {recipe.cookTimeMinutes} min
+                                                    </Text>
+                                                </Box>
+                                            </Group>
+                                        </Card>
+                                    </Grid.Col>
+
+                                    <Grid.Col span={6}>
+                                        <Card withBorder padding="md" radius="md">
+                                            <Group gap="xs">
+                                                <IconUsers size={20} color="gray" />
+                                                <Box>
+                                                    <Text size="xs" c="dimmed">Servings</Text>
+                                                    <Text fw={700} size="lg">
+                                                        {recipe.servings}
+                                                    </Text>
+                                                </Box>
+                                            </Group>
+                                        </Card>
+                                    </Grid.Col>
+
+                                    <Grid.Col span={6}>
+                                        <Card withBorder padding="md" radius="md">
+                                            <Group gap="xs">
+                                                <IconFlame size={20} color="orange" />
+                                                <Box>
+                                                    <Text size="xs" c="dimmed">Calories</Text>
+                                                    <Text fw={700} size="lg">
+                                                        {recipe.caloriesPerServing} kcal
+                                                    </Text>
+                                                </Box>
+                                            </Group>
+                                        </Card>
+                                    </Grid.Col>
+                                </Grid>
+                            </Stack>
+                        </Grid.Col>
+                    </Grid>
+                </Paper>
+
+                {/* ✅ Ingredients & Instructions */}
+                <Grid gutter="lg">
+                    <Grid.Col span={{ base: 12, md: 5 }}>
+                        <Paper shadow="sm" p="lg" radius="md" withBorder h="100%">
+                            <Title order={3} mb="md">🥕 Ingredients</Title>
+                            <List spacing="sm" size="md">
+                                {recipe.ingredients.map((item, index) => (
+                                    <List.Item key={index}>
+                                        <Text>{item}</Text>
+                                    </List.Item>
+                                ))}
+                            </List>
+                        </Paper>
+                    </Grid.Col>
+
+                    <Grid.Col span={{ base: 12, md: 7 }}>
+                        <Paper shadow="sm" p="lg" radius="md" withBorder h="100%">
+                            <Title order={3} mb="md">👨‍🍳 Instructions</Title>
+                            <List 
+                                type="ordered" 
+                                spacing="md" 
+                                size="md"
+                                withPadding
+                            >
+                                {recipe.instructions.map((step, index) => (
+                                    <List.Item key={index}>
+                                        <Text>{step}</Text>
+                                    </List.Item>
+                                ))}
+                            </List>
+                        </Paper>
+                    </Grid.Col>
+                </Grid>
+
+                {/* ✅ All Tags Section */}
+                {recipe.tags.length > 0 && (
+                    <Paper shadow="sm" p="lg" radius="md" withBorder>
+                        <Title order={4} mb="md">🏷️ Tags</Title>
+                        <Group gap="xs">
+                            {recipe.tags.map((tag) => (
+                                <Badge 
+                                    key={tag} 
+                                    size="lg" 
+                                    variant="dot"
+                                    color="gray"
+                                >
+                                    {tag}
+                                </Badge>
                             ))}
-                        </List>
-                    </div>
-
-                    <div style={{ flex: 1 }}>
-                        <Title order={3} mb="sm">Instructions</Title>
-                        <List type="ordered" withPadding>
-                            {recipe.instructions.map((step, index) => (
-                                <List.Item key={index}>{step}</List.Item>
-                            ))}
-                        </List>
-                    </div>
-                </Group>
-            </Paper>
+                        </Group>
+                    </Paper>
+                )}
+            </Stack>
         </Container>
     );
 }
