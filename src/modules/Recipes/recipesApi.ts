@@ -7,10 +7,7 @@ interface RecipesResponse {
     limit: number;
 }
 
-interface GetRecipesArgs {
-    limit: number;
-    skip: number;
-}
+
 type Igridient = string;
 type Instruction = string;
 type Tag = string;
@@ -30,6 +27,16 @@ export interface Recipe {
     image: string;
 }
 
+interface RecipesQuery {
+    q: string | null;
+    tag: Tag | null;
+    mealType: string | null;
+    sortBy: 'name' | 'rating' | 'caloriesPerServing' | 'prepTimeMinutes';
+    order: 'asc' | 'desc';
+    limit: number;
+    skip: number;
+}
+
 
 
 
@@ -42,12 +49,36 @@ export const recipesApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        getRecipes: builder.query<RecipesResponse, GetRecipesArgs>({
-            query: ({ limit, skip }) => `/recipes?limit=${limit}&skip=${skip}`,
+        getRecipes: builder.query<RecipesResponse, RecipesQuery>({
+            query: ({ q, tag, mealType, sortBy, order, limit, skip }) => {
+                let path = '/recipes';
+
+                if (q) {
+                    path = `/recipes/search?q=${encodeURIComponent(q)}`;
+                } else if (tag) {
+                    path = `/recipes/tag/${encodeURIComponent(tag)}`;
+                } else if (mealType) {
+                    path = `/recipes/meal-type/${encodeURIComponent(mealType)}`;
+                }
+
+                const params = new URLSearchParams({
+                    limit: String(limit),
+                    skip: String(skip),
+                    sortBy,
+                    order,
+                });
+
+                const separator = path.includes('?') ? '&' : '?';
+                return `${path}${separator}${params.toString()}`;
+            },
         }),
 
         getRecipe: builder.query<Recipe, number>({
             query: (id) => `/recipes/${id}`,
+        }),
+
+        getTags: builder.query<Tag[], void>({
+            query: () => `/recipes/tags`,
         }),
 
     }),
