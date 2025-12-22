@@ -1,6 +1,6 @@
 import { Button, Container, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useLoginMutation, setCredentials } from '../modules/auth';
+import { useLoginMutation, setCredentials } from "../modules/auth";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Navigate } from "react-router-dom";
 
