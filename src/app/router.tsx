@@ -1,12 +1,10 @@
 import { createBrowserRouter, redirect, Navigate } from "react-router-dom";
-import { Recipes } from "../modules/Recipes/Recipes";
-import { Recipe } from "../modules/Recipes/Recipe";
-import React from "react";
 import { Auth } from "../modules/Auth/Auth";
 import { Root } from "../modules/root";
 import { ProtectedRoute } from "../modules/protectedRoute";
-import { store } from "./store";
-import { recipesApi } from "../modules/Recipes/recipesApi";
+import { Recipe } from "../modules/Recipes/recipe";
+import { Recipes } from "../modules/Recipes/recipes";
+
 export const router = createBrowserRouter([
     {
         path: "/",

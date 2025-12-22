@@ -1,8 +1,8 @@
-import  { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, Group, Loader, Button } from '@mantine/core';
 import { useGetRecipesQuery } from "./recipesApi";
 import type { Order, RecipesQuery, SortBy, Tag } from "./recipesApi";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { RecipesList } from './recipesList';
 export function Recipes() {
 
@@ -15,6 +15,12 @@ export function Recipes() {
     const [order, setOrder] = useState<Order>('asc');
     const [limit, setLimit] = useState(12);
     const [page, setPage] = useState(parseInt(searchParam.get('page') || '1'));
+    useEffect(() => {
+        const urlPage = searchParam.get('page');
+        if (urlPage) {
+            setPage(parseInt(urlPage));
+        }
+    }, [searchParam]);
 
     const query: RecipesQuery = {
         q: mode === 'search' ? search : null,
@@ -32,7 +38,6 @@ export function Recipes() {
 
     if (isLoading) return <Loader />;
     if (error) return <Text c="red">Error loading recipes</Text>;
-    const totalRecipes = data?.total;
 
     return (
         <>
@@ -42,8 +47,8 @@ export function Recipes() {
                 <Button
                     disabled={page === 1}
                     onClick={() => {
+                        setSearchParam({ page: (page - 1).toString() });
                         setPage(page - 1);
-                        setSearchParam({ page: page.toString() });
                     }}>
                     Previous
                 </Button>
@@ -53,8 +58,8 @@ export function Recipes() {
                 <Button
                     disabled={data?.total! <= (page) * limit}
                     onClick={() => {
+                        setSearchParam({ page: (page + 1).toString() })
                         setPage(page + 1);
-                        setSearchParam({ page: page.toString() })
                     }}
                 >
                     Next

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Container,
@@ -31,7 +30,7 @@ export function Recipe() {
             <Button
                 variant="subtle"
                 leftSection={<IconArrowLeft size={16} />}
-                onClick={() => navigate('/recipes')}
+                onClick={() => navigate(-1)}
                 mb="md"
             >
                 Back to Recipes
