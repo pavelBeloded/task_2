@@ -10,7 +10,7 @@ interface RecipesResponse {
 
 type Igridient = string;
 type Instruction = string;
-type Tag = string;
+export type Tag = string;
 
 export interface Recipe {
     id: number;
@@ -27,19 +27,18 @@ export interface Recipe {
     image: string;
 }
 
-interface RecipesQuery {
+export type SortBy = 'name' | 'rating' | 'caloriesPerServing' | 'prepTimeMinutes';
+export type Order = 'asc' | 'desc';
+
+export interface RecipesQuery {
     q: string | null;
     tag: Tag | null;
     mealType: string | null;
-    sortBy: 'name' | 'rating' | 'caloriesPerServing' | 'prepTimeMinutes';
-    order: 'asc' | 'desc';
+    sortBy: SortBy;
+    order: Order;
     limit: number;
     skip: number;
 }
-
-
-
-
 
 export const recipesApi = createApi({
     reducerPath: "recipesApi",
