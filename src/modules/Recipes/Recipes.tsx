@@ -85,6 +85,7 @@ export function Recipes() {
                     <TextInput
                         radius="md"
                         size="md"
+                        aria-label="Search recipes by name"
                         placeholder="Search recipes by name..."
                         rightSectionWidth={42}
                         value={value}

@@ -58,6 +58,7 @@ export function Auth() {
                         radius="md"
                         size="md"
                         label="Username"
+                        aria-label="Your username"
                         placeholder="Your username"
                         key={form.key("username")}
                         {...form.getInputProps('username')}
@@ -66,6 +67,7 @@ export function Auth() {
                         radius="md"
                         size="md"
                         type="password"
+                        aria-label="Your password"
                         label="Password"
                         placeholder="Your password"
                         key={form.key("password")}

@@ -10,7 +10,14 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     const navigate = useNavigate();
 
     return (
-        <Card key={recipe.id} shadow="sm" padding="lg" radius="md" withBorder
+        <Card
+            role="article"
+            aria-label={`View ${recipe.name} recipe`}
+            key={recipe.id}
+            shadow="sm"
+            padding="lg"
+            radius="md"
+            withBorder
             style={{ cursor: 'pointer' }}
             onClick={() => {
                 navigate(`/recipes/${recipe.id}`);
