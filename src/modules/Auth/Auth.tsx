@@ -28,9 +28,14 @@ export function Auth() {
         mode: 'uncontrolled',
 
         validate: {
-            username: (value) => (value.length < 2 ? 'Username should have at least 2 letters' : null),
-            password: (value) => (value.length < 2 ? 'Password should have at least 2 letters' : null),
-        }
+            username: (value) => (value.trim().length < 2 ? 'Username should have at least 2 letters' : null),
+            password: (value) => (value.trim().length < 2 ? 'Password should have at least 2 letters' : null),
+        },
+
+        transformValues: (values) => ({
+            username: values.username.trim(),
+            password: values.password.trim(),
+        })
     });
 
     const handleSubmit = form.onSubmit(async ({ username, password }) => {

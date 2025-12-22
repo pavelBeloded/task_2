@@ -28,10 +28,6 @@ export const router = createBrowserRouter([
                     {
                         path: "recipes",
                         element: <Recipes />,
-                        // loader: async () => {
-                        //     store.dispatch(recipesApi.endpoints.getRecipes.initiate({ limit: 10, skip: 0 }));
-                        //     return null;
-                        // }
                     },
                     {
                         path: "recipes/:recipeId",
