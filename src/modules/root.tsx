@@ -73,7 +73,7 @@ export function Root() {
                                 <Menu shadow="xl" width={260} position="bottom-end" radius="md">
                                     <Menu.Target>
                                         <UnstyledButton style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                            <Avatar src={user.image} radius="xl" size="md" />
+                                            <Avatar src={user.image} radius="xl" size="md" alt="Profile"/>
                                             <Box>
                                                 <Text size="sm" fw={600}>{user.firstName}</Text>
                                                 <Text c="dimmed" size="xs">{user.email}</Text>
