@@ -1,8 +1,8 @@
-import { createBrowserRouter, redirect, Navigate } from "react-router-dom";
+import { createBrowserRouter, redirect, Navigate, createHashRouter } from "react-router-dom";
 import { Root, ProtectedRoute } from "../widgets";
 import { LoginPage, RecipesPage, RecipeDetailPage } from "../pages";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
     {
         path: "/",
         element: (
